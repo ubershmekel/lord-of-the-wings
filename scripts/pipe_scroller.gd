@@ -3,7 +3,7 @@ extends Node2D
 @export var pipe_scene: PackedScene
 @export var spawn_interval: float = 3
 @export var pipe_spawn_x: float = 90
-@export var pipe_min_y: float = 45
+@export var pipe_min_y: float = 50
 @export var pipe_max_y: float = 250
 @export var pipe_vx: float = 25
 var pipe_erase_x = -100;
@@ -25,7 +25,7 @@ func _process(delta):
 	if spawn_timer >= spawn_interval:
 		spawn_timer = 0
 		spawn_pipe()
-		print("spawned pipe")
+		
 
 func spawn_pipe():
 	var pipe = pipe_scene.instantiate()
