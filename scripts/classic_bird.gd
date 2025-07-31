@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-const GRAVITY = 1000
+const GRAVITY = 1200
 const JUMP_FORCE = -500
-const MAX_ROTATION = deg_to_rad(45)   # 45 degrees downward
-const MIN_ROTATION = deg_to_rad(-20)  # 20 degrees upward
-const ROTATION_SPEED = 8           # higher = snappier
+const MAX_ROTATION = deg_to_rad(45)   # max downward
+const MIN_ROTATION = deg_to_rad(-20)  # max upward
+const ROTATION_SPEED = 12             # higher = snappier
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
