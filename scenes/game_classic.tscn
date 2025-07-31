@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://xftg6d8oifyr"]
+[gd_scene load_steps=4 format=3 uid="uid://xftg6d8oifyr"]
 
 [ext_resource type="Script" uid="uid://bbnelq22r627d" path="res://scripts/classic_bird.gd" id="1_02djn"]
 [ext_resource type="Texture2D" uid="uid://ex6y0di2b55t" path="res://textures/flappy.webp" id="2_dwblx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02djn"]
+size = Vector2(23, 28.6667)
 
 [node name="GameClassic" type="Node2D"]
 
@@ -10,17 +13,19 @@ position = Vector2(120, 0)
 script = ExtResource("1_02djn")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-position = Vector2(70.2143, 45.1429)
-scale = Vector2(7.47619, 7.47619)
+scale = Vector2(7.22619, 7.22619)
 texture = ExtResource("2_dwblx")
 region_enabled = true
 region_rect = Rect2(264, 64, 18, 12)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D"]
+position = Vector2(-8, -10)
+scale = Vector2(7, 4.6)
+polygon = PackedVector2Array(-5.57143, 8.69565, 0.857141, 11.5217, 8.85714, 5.86957, 5, -6.08696, -2.85714, -5.86957, -7.28572, -1.30435)
 
 [node name="Pipe" type="Node2D" parent="."]
 position = Vector2(300, 0)
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 
 [node name="Shaft" type="Sprite2D" parent="Pipe"]
 position = Vector2(13, 21)
@@ -33,3 +38,9 @@ position = Vector2(13, 6)
 texture = ExtResource("2_dwblx")
 region_enabled = true
 region_rect = Rect2(330, 0, 26, 12)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Pipe"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pipe/StaticBody2D"]
+position = Vector2(13.1667, 15.3333)
+shape = SubResource("RectangleShape2D_02djn")
