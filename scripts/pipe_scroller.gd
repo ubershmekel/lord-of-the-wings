@@ -3,8 +3,8 @@ extends Node2D
 @export var pipe_scene: PackedScene
 @export var spawn_interval: float = 3
 @export var pipe_spawn_x: float = 90
-@export var pipe_min_y: float = 50
-@export var pipe_max_y: float = 250
+@export var pipe_min_y: float = 10
+@export var pipe_max_y: float = 270
 @export var pipe_vx: float = 25
 var pipe_erase_x = -100;
 var gap_min = 40
@@ -29,7 +29,9 @@ func _process(delta):
 
 func spawn_pipe():
 	var pipe = pipe_scene.instantiate()
-	pipe.find_child("TopPipe").position.y = -randf_range(gap_min, gap_max)
+	var gap = -randf_range(gap_min, gap_max)
+	pipe.find_child("TopPipe").position.y = gap
 	add_child(pipe)
-	pipe.position = Vector2(pipe_spawn_x, randf_range(pipe_min_y, pipe_max_y))
+	var pipe_y = randf_range(pipe_min_y - gap, pipe_max_y)
+	pipe.position = Vector2(pipe_spawn_x, pipe_y)
 	pipes.append(pipe)

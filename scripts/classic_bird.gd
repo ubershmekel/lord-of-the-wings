@@ -21,7 +21,6 @@ func _physics_process(delta):
 	if collision:
 		die()
 
-
 	# Rotate based on falling speed
 	var target_rotation = clamp(velocity.y * TARGET_ANGLE_PER_VY, MIN_ROTATION, MAX_ROTATION)
 	rotation = lerp_angle(rotation, target_rotation, ROTATION_SPEED * delta)
