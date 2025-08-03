@@ -8,6 +8,12 @@ const ROTATION_SPEED = 16             # higher = snappier
 const FLAPPY_X = 100
 const TARGET_ANGLE_PER_VY = 0.001      # higher = cap out angle at lower vy
 var died = 0
+@onready var screen_size = get_viewport_rect().size
+@onready var bottom_limit = screen_size.y
+@onready var bird_sprite = $BirdSprite
+
+func _ready():
+	bird_sprite.play("idle")
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
@@ -15,6 +21,9 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("ui_accept"):
 		velocity.y = JUMP_FORCE
+		bird_sprite.sprite_frames.set_animation_loop("flap", false)
+		bird_sprite.play("flap")
+		bird_sprite.animation_finished.connect(_on_animation_finished)
 
 	#move_and_slide()
 	var collision = move_and_collide(velocity * delta)
@@ -27,4 +36,10 @@ func _physics_process(delta):
 
 func die():
 	died += 1
-	print("died ", died)
+	#print("died ", died)
+
+func _on_animation_finished():
+	#print("anim", anim_name)
+	#if anim_name == "flap":
+	bird_sprite.sprite_frames.set_animation_loop("idle", true)
+	bird_sprite.play("idle")

@@ -1,26 +1,46 @@
-[gd_scene load_steps=5 format=3 uid="uid://xftg6d8oifyr"]
+[gd_scene load_steps=8 format=3 uid="uid://xftg6d8oifyr"]
 
 [ext_resource type="Script" uid="uid://bbnelq22r627d" path="res://scripts/classic_bird.gd" id="1_02djn"]
-[ext_resource type="Texture2D" uid="uid://ex6y0di2b55t" path="res://textures/flappy.webp" id="2_dwblx"]
+[ext_resource type="SpriteFrames" uid="uid://ducky85cka" path="res://textures/ducky.tres" id="2_nnwwv"]
 [ext_resource type="Script" uid="uid://rsvscnrwnysi" path="res://scripts/pipe_scroller.gd" id="3_dwblx"]
 [ext_resource type="PackedScene" uid="uid://bpxc0c0mavkla" path="res://scenes/pipe_pair.tscn" id="3_nnwwv"]
+[ext_resource type="Texture2D" uid="uid://bfynpd1bi7yxq" path="res://textures/ground.png" id="5_jctoe"]
+[ext_resource type="Script" uid="uid://ronaq8n2j8ee" path="res://scripts/floor.gd" id="5_s3o20"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnwwv"]
+size = Vector2(805.5, 149.5)
 
 [node name="GameClassic" type="Node2D"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+script = ExtResource("5_s3o20")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(348.25, 1313.25)
+shape = SubResource("RectangleShape2D_nnwwv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+texture_repeat = 2
+position = Vector2(352, 1267)
+texture = ExtResource("5_jctoe")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 64)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(120, 0)
 script = ExtResource("1_02djn")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-scale = Vector2(7.22619, 7.22619)
-texture = ExtResource("2_dwblx")
-region_enabled = true
-region_rect = Rect2(264, 64, 18, 12)
+[node name="BirdSprite" type="AnimatedSprite2D" parent="CharacterBody2D"]
+scale = Vector2(1.931, 1.931)
+sprite_frames = ExtResource("2_nnwwv")
+animation = &"flap"
+frame = 1
+frame_progress = 0.154324
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D"]
 position = Vector2(-8, -10)
 scale = Vector2(7, 4.6)
-polygon = PackedVector2Array(-5.57143, 8.69565, 0.857141, 11.5217, 8.85714, 5.86957, 5, -6.08696, -2.85714, -5.86957, -7.28572, -1.30435)
+polygon = PackedVector2Array(-6.71428, 6.95652, 0.142858, 8.47826, 8.42857, 1.95652, 3.71429, -3.26087, -1.14286, -3.26087, -4.14286, 1.30435, -7.28572, -1.30435)
 
 [node name="PipePair" parent="." instance=ExtResource("3_nnwwv")]
 visible = false
