@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://0488fykyfq2a"]
+
+[ext_resource type="Script" uid="uid://84qpr8d81ryi" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_l6cm7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -216.0
+offset_right = 216.0
+offset_bottom = 289.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 51
+text = "Lord of the Wings
+Club Flappy
+Flappy Olympics
+Flubby"
+horizontal_alignment = 1
+
+[node name="StackyButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -46.0
+offset_right = 206.0
+offset_bottom = 46.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 61
+text = "Stacky"
+
+[node name="ClassicButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -196.0
+offset_right = 206.0
+offset_bottom = -104.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 61
+text = "Classic"
+
+[connection signal="pressed" from="CanvasLayer/StackyButton" to="." method="_on_stacky_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ClassicButton" to="." method="_on_classic_button_pressed"]
