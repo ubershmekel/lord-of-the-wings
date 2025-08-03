@@ -4,4 +4,4 @@ var scroll_offset: float = 0.0
 
 func _process(delta):
 	scroll_offset += scroll_speed * delta
-	$Sprite2D.region_rect.position.x = scroll_offset
+	$FloorSprite.region_rect.position.x = scroll_offset

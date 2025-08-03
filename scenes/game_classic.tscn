@@ -21,7 +21,7 @@ script = ExtResource("5_s3o20")
 position = Vector2(348.25, 1313.25)
 shape = SubResource("RectangleShape2D_nnwwv")
 
-[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+[node name="FloorSprite" type="Sprite2D" parent="Floor"]
 texture_repeat = 2
 position = Vector2(352, 1267)
 texture = ExtResource("5_jctoe")

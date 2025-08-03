@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://diu20i7ttxiqu"]
+
+[ext_resource type="Texture2D" uid="uid://c30eth01dg3r5" path="res://textures/full_block.png" id="1_4o276"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdarn"]
+size = Vector2(64, 64)
+
+[node name="StackyBlock" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_rdarn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4o276")
