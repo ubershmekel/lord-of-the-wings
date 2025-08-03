@@ -1,5 +1,7 @@
 extends Node2D
 
+signal passed_pipe
+
 @export var pipe_scene: PackedScene
 @export var spawn_interval: float = 2.0
 @export var pipe_spawn_x: float = 90
@@ -25,13 +27,19 @@ func _process(delta):
 	if spawn_timer >= spawn_interval:
 		spawn_timer = 0
 		spawn_pipe()
-		
+
+func _on_pipe_passed():
+	emit_signal("passed_pipe")
 
 func spawn_pipe():
 	var pipe = pipe_scene.instantiate()
 	var gap = -randf_range(gap_min, gap_max)
 	pipe.find_child("TopPipe").position.y = gap
+	pipe.passed_pipe.connect(_on_passed_pipe)
 	add_child(pipe)
 	var pipe_y = randf_range(pipe_min_y - gap, pipe_max_y)
 	pipe.position = Vector2(pipe_spawn_x, pipe_y)
 	pipes.append(pipe)
+
+func _on_passed_pipe():
+	emit_signal("passed_pipe")

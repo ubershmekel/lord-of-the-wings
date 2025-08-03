@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpxc0c0mavkla"]
+[gd_scene load_steps=6 format=3 uid="uid://bpxc0c0mavkla"]
 
 [ext_resource type="Texture2D" uid="uid://ex6y0di2b55t" path="res://textures/flappy.webp" id="1_8x3ej"]
+[ext_resource type="Script" uid="uid://dmfmbqxwgwvl5" path="res://scripts/pipe_pair.gd" id="1_m2bs7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_02djn"]
 size = Vector2(23, 294)
@@ -8,7 +9,11 @@ size = Vector2(23, 294)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8jum"]
 size = Vector2(24, 268)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2bs7"]
+size = Vector2(17, 590)
+
 [node name="PipePair" type="Node2D"]
+script = ExtResource("1_m2bs7")
 
 [node name="BottomPipe" type="Node2D" parent="."]
 
@@ -25,9 +30,9 @@ texture = ExtResource("1_8x3ej")
 region_enabled = true
 region_rect = Rect2(330, 0, 26, 12)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="BottomPipe"]
+[node name="PipeBody" type="StaticBody2D" parent="BottomPipe"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomPipe/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomPipe/PipeBody"]
 position = Vector2(13.1667, 149)
 shape = SubResource("RectangleShape2D_02djn")
 
@@ -48,8 +53,14 @@ texture = ExtResource("1_8x3ej")
 region_enabled = true
 region_rect = Rect2(330, 0, 26, 12)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="TopPipe"]
+[node name="PipeBody" type="StaticBody2D" parent="TopPipe"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TopPipe/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopPipe/PipeBody"]
 position = Vector2(13, 136)
 shape = SubResource("RectangleShape2D_t8jum")
+
+[node name="ScoreZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreZone"]
+position = Vector2(34.5, 2)
+shape = SubResource("RectangleShape2D_m2bs7")
