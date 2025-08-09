@@ -7,10 +7,10 @@ size = Vector2(64, 64)
 
 [node name="StackyBlock" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="BlockBody" type="CharacterBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_rdarn")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="BlockBody"]
 texture = ExtResource("1_4o276")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlockBody"]
+shape = SubResource("RectangleShape2D_rdarn")
