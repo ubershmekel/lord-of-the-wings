@@ -5,12 +5,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rdarn"]
 size = Vector2(64, 64)
 
-[node name="StackyBlock" type="Node2D"]
+[node name="StackyBlock" type="CharacterBody2D"]
 
-[node name="BlockBody" type="CharacterBody2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="BlockBody"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_4o276")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BlockBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rdarn")
