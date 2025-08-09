@@ -15,7 +15,6 @@ scale = Vector2(1.931, 1.931)
 anchor_mode = 0
 
 [node name="FloorSprite" type="Sprite2D" parent="."]
-visible = false
 texture_repeat = 2
 position = Vector2(1025, 1267)
 texture = ExtResource("1_42g4j")
@@ -23,10 +22,8 @@ region_enabled = true
 region_rect = Rect2(0, 0, 2048, 64)
 
 [node name="Level" type="Node2D" parent="."]
-scale = Vector2(3.72876, 3.72876)
 
 [node name="BlockStack" type="Node2D" parent="."]
-scale = Vector2(1.931, 1.931)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
