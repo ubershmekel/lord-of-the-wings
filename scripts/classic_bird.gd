@@ -22,7 +22,7 @@ func _physics_process(delta):
 	velocity.y += GRAVITY * delta
 	position.x = FLAPPY_X
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("tap"):
 		velocity.y = JUMP_FORCE
 		bird_sprite.sprite_frames.set_animation_loop("flap", false)
 		bird_sprite.play("flap")
