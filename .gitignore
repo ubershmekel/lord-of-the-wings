@@ -5,3 +5,4 @@
 addons/
 *.tmp
 /exports
+.vscode/settings.json
