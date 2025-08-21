@@ -1,8 +1,8 @@
 extends Node2D
 
 const GRAVITY = 600
-const FORWARD_SPEED = 150
-var scroll_speed: float = 150.0
+const FORWARD_SPEED = 250
+var bg_scroll_speed: float = 250.0
 var scroll_offset: float = 0.0
 @onready var screen_size = get_viewport_rect().size
 @onready var bird_body = $Bird
@@ -24,7 +24,7 @@ func _ready():
 	bird_body.position.x = 0
 
 func _process(delta):
-	scroll_offset += scroll_speed * delta
+	scroll_offset += bg_scroll_speed * delta
 	camera.position.x = bird_body.position.x - 100
 	camera.position.y = 0
 	$FloorSprite.region_rect.position.x = scroll_offset
@@ -65,58 +65,44 @@ func _physics_process(delta):
 	bird_body.velocity.y += GRAVITY * delta
 	bird_body.position.x += FORWARD_SPEED * delta
 	bird_body.position.y += bird_body.velocity.y * delta
-	
+
 	# Check if bird is on top of any block or level chunk
 	check_bird_landing()
-	
-	#bird_body.position.y > floor
-	
+
 	$BlockStack.position.x = bird_body.position.x
-	#$BlockStack.position = $Bird.position
 	var bird_at = int(bird_body.position.x / BLOCK_HEIGHT)
-	debug_label.text = str(bird_at) + " " + str($Level.index_to_heights[bird_at])
+	debug_label.text = str(bird_at) + " " + str($Level.index_to_heights.get(bird_at, []))
 	$Level.bird_at = bird_at
-	# if $BlockStack.get_child_count() > 0:
-		# var first_block = $BlockStack.get_child(0)
-		#debug_label.text = "%f %f" % [first_block.position.x, first_block.position.y]
-		#debug_label.text = "%s\n%s\n%s\n%s" % [$BlockStack.position, first_block.position, block_body.position, bird_body.position]
-		#var pos = [bl for bl in $BlockStack.get_children()]
-		#debug_label.text = "\n".join([
-			#$BlockStack.global_position,
-			#first_block.global_position,
-			#first_block.get_child(0).global_position,
-			#bird_body.position
-		#])
-		#
-		#var positions = [bird_body.global_position]
-		#for block_body in $BlockStack.get_children():
-			#positions.append(block_body.global_position)
-		#debug_label.text = "\n".join(positions)
+
+	# Remove stack blocks that are at the same y as the level chunk at bird_at
+	var chunk_heights = $Level.index_to_heights.get(bird_at, [])
+	if chunk_heights.size() > 0:
+		var floor_chunk_y = screen_size.y - BLOCK_HEIGHT * chunk_heights[0]
+		var blocks_to_remove := []
+		for block_body in $BlockStack.get_children():
+			# Compare y with some tolerance for float precision
+			if abs(block_body.position.y - floor_chunk_y) < 1.0:
+				blocks_to_remove.append(block_body)
+		for block in blocks_to_remove:
+			block.queue_free()
+	
+		if bird_body.position.y > floor_chunk_y:
+			bird_body.position.y = floor_chunk_y - BLOCK_HEIGHT
+
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("tap"):
-		#print(bird_body.position.x)
-		#print(bird_base_y, " ", bird_body.position.y, " ", bird_body.velocity.y)
 		add_block()
 		bird_body.global_position.y -= BLOCK_HEIGHT
 		bird_body.velocity.y = 0
 		bird_sprite.sprite_frames.set_animation_loop("flap", false)
 		bird_sprite.play("flap")
 		print("bird ", bird_body.global_position.y)
-		
-	
+
 	for block_body in $BlockStack.get_children():
-		#block_body.global_position.x = bird_body.global_position.x
-		#block.position.x = BLOCK_HEIGHT
 		block_body.velocity.x = 0
 		block_body.velocity.y += GRAVITY * delta
-		#block_body.position.y += block_body.velocity.y * delta
 		block_body.position.x = 0
 		block_body.move_and_slide()
 		block_body.position.x = 0
-
-	#$BlockStack.position.x = bird_body.position.x
-	#print("block.position: ", $BlockStack.position)
-	#print("bird_body.position: ", bird_body.position)
-	#bird_body.move_and_slide()
 
 func check_bird_landing():
 	# Check if bird is on top of any block
@@ -141,16 +127,16 @@ func check_bird_landing():
 				#return  # Found a landing spot, no need to check further
 	
 	# Check if bird is on top of any level chunk
-	for chunk in $Level.get_children():
+	#for chunk in $Level.get_children():
 		#var chunk_sprite = chunk.get_node("Sprite2D")
 		#var chunk_body = chunk.get_node("StaticBody2D")
 		# Check if bird is above the chunk and close enough
-		var bird_bottom = bird_body.position.y + HALF_BLOCK_HEIGHT # Half bird height
-		var chunk_top = chunk.position.y - HALF_BLOCK_HEIGHT # Half chunk height
+		#var bird_bottom = bird_body.position.y + HALF_BLOCK_HEIGHT # Half bird height
+		#var chunk_top = chunk.position.y - HALF_BLOCK_HEIGHT # Half chunk height
 		
-		if bird_bottom >= chunk_top:
-			# Check horizontal collision
-			bird_body.position.y = chunk_top - HALF_BLOCK_HEIGHT
+		#if bird_bottom >= chunk_top:
+			## Check horizontal collision
+			#bird_body.position.y = chunk_top - HALF_BLOCK_HEIGHT
 	
 	# If bird didn't land on anything, check if it's hitting the level floor
 	var floor_y = screen_size.y - 100 # Bird height above ground

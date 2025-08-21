@@ -5,7 +5,8 @@ const BLOCK_HEIGHT = preload("res://scripts/stacky_constants.gd").BLOCK_HEIGHT
 const MIN_HEIGHT = 1
 const MAX_HEIGHT = 10
 const GENERATE_WHEN_LEFT = 20
-const GENERATE_AT_A_TIME = 40
+const GENERATE_AT_A_TIME = 50
+const DELETE_LEFT_OF_BIRD_X = 5
 
 var level_chunk_scene = preload("res://scenes/stacky_level_chunk.tscn")
 
@@ -28,7 +29,7 @@ func _process(_delta):
 	var remaining_columns = blocks_generated_to - bird_at
 	if remaining_columns < GENERATE_WHEN_LEFT:
 		# delete old
-		for i in range(blocks_exist_from, bird_at):
+		for i in range(blocks_exist_from, bird_at - DELETE_LEFT_OF_BIRD_X):
 			var chunks = index_to_chunks[i]
 			index_to_heights.erase(i)
 			index_to_chunks.erase(i)
