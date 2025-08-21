@@ -86,8 +86,9 @@ func _physics_process(delta):
 		for block in blocks_to_remove:
 			block.queue_free()
 	
-		if bird_body.position.y > floor_chunk_y:
+		if bird_body.position.y + BLOCK_HEIGHT > floor_chunk_y:
 			bird_body.position.y = floor_chunk_y - BLOCK_HEIGHT
+			bird_body.velocity.y = 0
 
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("tap"):
 		add_block()

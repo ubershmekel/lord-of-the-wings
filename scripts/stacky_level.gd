@@ -48,7 +48,7 @@ func generate_chunks(start_height: int = 0):
 	for i in range(GENERATE_AT_A_TIME):
 		var index = blocks_generated_to + 1
 		# randomly go up or down 10% of the time
-		if randf() > 0.7:
+		if randf() > 0.8:
 			# height change
 			if cur_height == MIN_HEIGHT:
 				cur_height += 1
