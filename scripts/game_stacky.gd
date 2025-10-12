@@ -1,7 +1,8 @@
 extends Node2D
 
 const GRAVITY = 600
-const FORWARD_SPEED = 250
+const initial_forward_speed = 250
+var forward_speed = initial_forward_speed
 var bg_scroll_speed: float = 250.0
 var scroll_offset: float = 0.0
 @onready var screen_size = get_viewport_rect().size
@@ -38,6 +39,7 @@ func _process(delta):
 
 func _on_die():
 	score = 0
+	forward_speed = initial_forward_speed
 	update_score()
 
 func get_block_height():
@@ -79,7 +81,7 @@ func y_to_yi(y):
 	return int((screen_size.y - y) / BLOCK_HEIGHT)
 
 func _physics_process(delta):
-	#bird_body.velocity.x = FORWARD_SPEED
+	#bird_body.velocity.x = forward_speed
 	bird_body.velocity.y += GRAVITY * delta
 
 	land_bird_on_stack()
@@ -95,6 +97,8 @@ func _physics_process(delta):
 	if is_new_xi:
 		if bird_at % 4 == 0:
 			score += 1
+		if score % 10 == 9:
+			forward_speed += 20
 
 	# Remove stack blocks that are at the same y as the level chunk at bird_at
 	var level_chunk_heights = $Level.index_to_heights.get(bird_at, [])
@@ -140,7 +144,7 @@ func _physics_process(delta):
 
 	# Important to update the position at the end to give the rest of the logic
 	# the ability to zero out the velocities
-	bird_body.position.x += FORWARD_SPEED * delta
+	bird_body.position.x += forward_speed * delta
 	bird_body.position.y += bird_body.velocity.y * delta
 
 func land_bird_on_stack():
