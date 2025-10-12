@@ -39,6 +39,7 @@ func _process(delta):
 
 func _on_die():
 	score = 0
+	_delete_stack()
 	forward_speed = initial_forward_speed
 	update_score()
 
@@ -100,32 +101,22 @@ func _physics_process(delta):
 		if score % 10 == 9:
 			forward_speed += 20
 
-	# Remove stack blocks that are at the same y as the level chunk at bird_at
+	_remove_stack_blocks_for_column(bird_at)
+	
 	var level_chunk_heights = $Level.index_to_heights.get(bird_at, [])
 	if level_chunk_heights.size() > 0:
-		var floor_yi = level_chunk_heights[0]
 		var floor_chunk_y = screen_size.y - BLOCK_HEIGHT * level_chunk_heights[0]
-		var blocks_to_remove := []
-		for block_body in $BlockStack.get_children():
-			# Compare y with some tolerance for float precision
-			if abs(block_body.position.y - floor_chunk_y) < 1.0:
-				blocks_to_remove.append(block_body)
-		for block in blocks_to_remove:
-			block.queue_free()
-	
-		# Is bird above floor
-		#var bird_bottom_y_edge = bird_body.position.y + BLOCK_HEIGHT * 1.1
-		#debug_label.text = "bird_body_y=%s, floor_y=%s" % [bird_body.position.y  + BLOCK_HEIGHT, floor_chunk_y]
-		# debug_label.text = "%.2f, %.2f" % [bird_body.position.y, floor_chunk_y]
-		# debug_label.text = "%.2f, %.2f" % [bird_yi, floor_yi]
+			
 		if bird_body.position.y + BLOCK_HEIGHT >= floor_chunk_y:
 			bird_body.velocity.y = 0
-			
-		if bird_yi <= floor_yi:
-			if is_new_xi:
-				_on_die()
-			bird_body.position.y = floor_chunk_y - BLOCK_HEIGHT - 1
-			bird_body.velocity.y = 0
+		
+		for chunk_yi in level_chunk_heights:
+			if bird_yi == chunk_yi:
+				bird_body.position.y = floor_chunk_y - BLOCK_HEIGHT - 1
+				bird_body.velocity.y = 0
+				if is_new_xi:
+					_on_die()
+					break
 
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("tap"):
 		add_block()
@@ -190,6 +181,29 @@ func land_bird_on_stack():
 	
 	# If bird didn't land on anything, check if it's hitting the level floor
 
+func _delete_stack():
+	for block_body in $BlockStack.get_children():
+		block_body.queue_free()
+
+func _remove_stack_blocks_for_column(column_index: int):
+	var level_chunk_heights = $Level.index_to_heights.get(column_index, [])
+	if level_chunk_heights.size() <= 0:
+		return
+	
+	var blocks_to_remove := []
+	var level_chunk_ys = []
+	for height in level_chunk_heights:
+		level_chunk_ys.append(yi_to_y(height))
+
+	for block_body in $BlockStack.get_children():
+		for chunk_y in level_chunk_ys:
+			# Compare y with some tolerance for float precision
+			if abs(block_body.position.y - chunk_y) < 1.0:
+				blocks_to_remove.append(block_body)
+				break # Block matches one chunk height, no need to check others
+
+	for block in blocks_to_remove:
+		block.queue_free()
 
 func spawn_block():
 	pass
