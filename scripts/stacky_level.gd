@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var screen_size = get_viewport_rect().size
 const BLOCK_HEIGHT = preload("res://scripts/stacky_constants.gd").BLOCK_HEIGHT
+const HALF_BLOCK_HEIGHT = BLOCK_HEIGHT / 2
 const MIN_FLOOR_HEIGHT = 1
 const MAX_FLOOR_HEIGHT = 8
 const MIN_CEILING_HEIGHT = 10
@@ -24,6 +25,7 @@ var level_chunk_scene = preload("res://scenes/stacky_level_chunk.tscn")
 # blocks_exist_from when 0 or greater points to the first column that has been generated
 @export var blocks_exist_from: int = -1
 
+
 func _ready():
 	blocks_exist_from = 0
 	generate_chunks()
@@ -43,10 +45,18 @@ func _process(_delta):
 		# generate new chunks
 		generate_chunks()
 
+func yi_to_y(yi):
+	return screen_size.y - BLOCK_HEIGHT * yi
+
+func y_to_yi(y):
+	# This `+HALF_BLOCK_HEIGHT` is critical because we want the middle of the bird
+	# to decide which grid cell it's in, not the edge of the bird.
+	return int((screen_size.y - y + HALF_BLOCK_HEIGHT) / BLOCK_HEIGHT) 
+
 func _create_chunk(column_index: int, height: int) -> Node2D:
 	var chunk = level_chunk_scene.instantiate()
 	chunk.position.x = column_index * BLOCK_HEIGHT
-	chunk.position.y = screen_size.y - BLOCK_HEIGHT * height
+	chunk.position.y = yi_to_y(height) # screen_size.y - BLOCK_HEIGHT * height
 	add_child(chunk)
 	return chunk
 

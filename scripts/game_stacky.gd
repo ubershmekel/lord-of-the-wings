@@ -75,32 +75,24 @@ func add_block():
 func update_score():
 	score_label.text = "Score: %d" % score
 
-func yi_to_y(yi):
-	return screen_size.y - BLOCK_HEIGHT * yi
-
-func y_to_yi(y):
-	return int((screen_size.y - y) / BLOCK_HEIGHT)
-
 func _physics_process(delta):
 	#bird_body.velocity.x = forward_speed
 	bird_body.velocity.y += GRAVITY * delta
 
-	land_bird_on_stack()
-
 	$BlockStack.position.x = bird_body.position.x
 	var bird_at = int(bird_body.position.x / BLOCK_HEIGHT)
-	#debug_label.text = str(bird_at) + " " + str($Level.index_to_heights.get(bird_at, [])) + " | Score: " + str(score)
 	var is_new_xi = false
 	if $Level.bird_at != bird_at:
 		is_new_xi = true
 	$Level.bird_at = bird_at
-	var bird_yi = y_to_yi(bird_body.position.y)
+	var bird_yi = $Level.y_to_yi(bird_body.position.y)
 	if is_new_xi:
 		if bird_at % 4 == 0:
 			score += 1
 		if score % 10 == 9:
 			forward_speed += 20
 
+	land_bird_on_stack()
 	_remove_stack_blocks_for_column(bird_at)
 	
 	var level_chunk_heights = $Level.index_to_heights.get(bird_at, [])
@@ -137,6 +129,11 @@ func _physics_process(delta):
 	# the ability to zero out the velocities
 	bird_body.position.x += forward_speed * delta
 	bird_body.position.y += bird_body.velocity.y * delta
+	#var mouse_pos = get_global_mouse_position()
+	#bird_body.position.y = mouse_pos.y
+	#debug_label.text = str(bird_at) + " " + str($Level.index_to_heights.get(bird_at, [])) + " | Score: " + str(score)
+	# debug_label.text = "%s %.2f" % [bird_yi, bird_body.position.y]
+
 
 func land_bird_on_stack():
 	var floor_y = screen_size.y - 100 # Bird height above ground
@@ -193,7 +190,7 @@ func _remove_stack_blocks_for_column(column_index: int):
 	var blocks_to_remove := []
 	var level_chunk_ys = []
 	for height in level_chunk_heights:
-		level_chunk_ys.append(yi_to_y(height))
+		level_chunk_ys.append($Level.yi_to_y(height))
 
 	for block_body in $BlockStack.get_children():
 		for chunk_y in level_chunk_ys:
