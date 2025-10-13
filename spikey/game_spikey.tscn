@@ -1,0 +1,123 @@
+[gd_scene load_steps=9 format=3 uid="uid://d05h8ur5i5eb0"]
+
+[ext_resource type="Script" uid="uid://ha2rxafmgwnd" path="res://spikey/spikey_bird.gd" id="1_pd7ke"]
+[ext_resource type="SpriteFrames" uid="uid://ducky85cka" path="res://textures/ducky.tres" id="2_h6k1o"]
+[ext_resource type="PackedScene" uid="uid://wcj726xhx5mh" path="res://shared/back_button.tscn" id="3_egefc"]
+[ext_resource type="Texture2D" uid="uid://c30eth01dg3r5" path="res://textures/full_block.png" id="4_h6k1o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pd7ke"]
+size = Vector2(834, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6k1o"]
+size = Vector2(64, 1438.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egefc"]
+size = Vector2(64, 1438.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw4ok"]
+size = Vector2(834, 64)
+
+[node name="GameSpikey" type="Node2D"]
+
+[node name="Bird" type="CharacterBody2D" parent="."]
+position = Vector2(200, 200)
+script = ExtResource("1_pd7ke")
+
+[node name="BirdSprite" type="AnimatedSprite2D" parent="Bird"]
+scale = Vector2(1.931, 1.931)
+sprite_frames = ExtResource("2_h6k1o")
+animation = &"flap"
+frame = 1
+frame_progress = 0.154324
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bird"]
+position = Vector2(-8, -10)
+scale = Vector2(7, 4.6)
+polygon = PackedVector2Array(-6.71428, 6.95652, 0.142858, 8.47826, 8.42857, 1.95652, 3.71429, -3.26087, -1.14286, -3.26087, -4.14286, 1.30435, -7.28572, -1.30435)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="BackButton" parent="UI" instance=ExtResource("3_egefc")]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 43.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 91
+text = "0"
+horizontal_alignment = 1
+
+[node name="DebugLabel" type="Label" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "DEBUG TEXT"
+
+[node name="Bounds" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="Bounds"]
+
+[node name="Sprite2D3" type="Sprite2D" parent="Bounds/Floor"]
+texture_repeat = 2
+position = Vector2(0, 1216)
+texture = ExtResource("4_h6k1o")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 720, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/Floor"]
+position = Vector2(371, 1248)
+shape = SubResource("RectangleShape2D_pd7ke")
+
+[node name="Right" type="StaticBody2D" parent="Bounds"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Bounds/Right"]
+texture_repeat = 2
+position = Vector2(656, 0)
+texture = ExtResource("4_h6k1o")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 1280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/Right"]
+position = Vector2(688, 600)
+shape = SubResource("RectangleShape2D_h6k1o")
+
+[node name="Left" type="StaticBody2D" parent="Bounds"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Bounds/Left"]
+texture_repeat = 2
+texture = ExtResource("4_h6k1o")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 1280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/Left"]
+position = Vector2(32, 660)
+shape = SubResource("RectangleShape2D_egefc")
+
+[node name="Ceiling" type="StaticBody2D" parent="Bounds"]
+
+[node name="Sprite2D4" type="Sprite2D" parent="Bounds/Ceiling"]
+texture_repeat = 2
+texture = ExtResource("4_h6k1o")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 720, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/Ceiling"]
+position = Vector2(369, 32)
+shape = SubResource("RectangleShape2D_sw4ok")
