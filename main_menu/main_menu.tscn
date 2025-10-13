@@ -22,13 +22,24 @@ Flappy Olympics
 Flubby"
 horizontal_alignment = 1
 
-[node name="StackyButton" type="Button" parent="CanvasLayer"]
+[node name="SpikeyButton" type="Button" parent="CanvasLayer"]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -46.0
 offset_right = 206.0
 offset_bottom = 46.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 61
+text = "Spikey"
+
+[node name="StackyButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 106.0
+offset_right = 206.0
+offset_bottom = 198.0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 61
 text = "Stacky"
@@ -44,5 +55,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 61
 text = "Classic"
 
+[connection signal="pressed" from="CanvasLayer/SpikeyButton" to="." method="_on_spikey_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/StackyButton" to="." method="_on_stacky_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/ClassicButton" to="." method="_on_classic_button_pressed"]

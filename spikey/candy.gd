@@ -6,6 +6,6 @@ func _ready() -> void:
 		$AnimatedSprite2D.play()
 
 func _on_body_entered(body: Node) -> void:
-	print("candy collided with ", body)
+	#print("candy collided with ", body)
 	if body.name == "Bird":
 		body.collect_candy(self)
