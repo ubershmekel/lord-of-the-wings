@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://di10n0rjr4r7"]
+[gd_scene load_steps=8 format=3 uid="uid://di10n0rjr4r7"]
 
+[ext_resource type="Script" uid="uid://rnto1rknoc5i" path="res://spikey/candy.gd" id="1_7xtwt"]
 [ext_resource type="Texture2D" uid="uid://c4sq1xi6ch2yc" path="res://textures/candy.png" id="1_gil7f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1b5bl"]
@@ -34,7 +35,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_lmkf8"]
 radius = 30.0
 
-[node name="Candy" type="Area2D"]
+[node name="Candy" type="Area2D" groups=["candy"]]
+script = ExtResource("1_7xtwt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lcjhq")

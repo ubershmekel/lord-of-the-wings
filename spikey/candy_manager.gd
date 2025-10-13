@@ -1,28 +1,20 @@
 extends Node2D
+const TILE_SIZE = preload("res://spikey/constants.gd").TILE_SIZE
+const CANDY_GROUP = preload("res://spikey/constants.gd").CANDY_GROUP
 
 @export var candy_scene: PackedScene
 # @onready var screen_size = get_viewport_rect().size
 
-
-var spikes := []
-var spawn_timer := 0.0
-var spawn_interval := 2.0
-
-func _ready():
-	spawn_timer = spawn_interval
-	spawn()
-
-func _process(delta):
-	spawn_timer -= delta
-	if spawn_timer <= 0:
-		spawn_timer = spawn_interval
-		spawn()
+var candy = null;
 
 func spawn():
-	var spike = candy_scene.instantiate()
-	add_child(spike)
-	spikes.append(spike)
+	if candy and is_instance_valid(candy):
+		candy.queue_free()
+	candy = candy_scene.instantiate()
+	add_child(candy)
+	candy.add_to_group(CANDY_GROUP)
+
 	var screen_size = get_viewport_rect().size
-	var spike_x = randf_range(0, screen_size.x)
-	var spike_y = randf_range(0, screen_size.y)
-	spike.position = Vector2(spike_x, spike_y)
+	var x = randf_range(TILE_SIZE * 2, screen_size.x - TILE_SIZE * 2)
+	var y = randf_range(TILE_SIZE * 2, screen_size.y - TILE_SIZE * 2)
+	candy.position = Vector2(x, y)
