@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var screen_size = get_viewport_rect().size
-const BLOCK_HEIGHT = preload("res://scripts/stacky_constants.gd").BLOCK_HEIGHT
+const BLOCK_HEIGHT = preload("res://stacky/stacky_constants.gd").BLOCK_HEIGHT
 const HALF_BLOCK_HEIGHT = BLOCK_HEIGHT / 2
 const MIN_FLOOR_HEIGHT = 1
 const MAX_FLOOR_HEIGHT = 8
@@ -12,7 +12,7 @@ const GENERATE_AT_A_TIME = 50
 const DELETE_LEFT_OF_BIRD_X = 5
 const OBSTACLE_PROBABILITY = 0.1
 
-var level_chunk_scene = preload("res://scenes/stacky_level_chunk.tscn")
+var level_chunk_scene = preload("res://stacky/stacky_level_chunk.tscn")
 
 @export var bird_at: int = false
 # {column_index: [tile_height, ...]}

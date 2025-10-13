@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqp53tbb1h0xi"]
 
-[ext_resource type="Texture2D" uid="uid://c30eth01dg3r5" path="res://textures/full_block.png" id="1_5k4j1"]
+[ext_resource type="Texture2D" uid="uid://c30eth01dg3r5" path="res://textures/full_block.png" id="1_j77hj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dusff"]
 size = Vector2(64, 64)
@@ -8,7 +8,7 @@ size = Vector2(64, 64)
 [node name="StackyLevelChunk" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_5k4j1")
+texture = ExtResource("1_j77hj")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

@@ -1,21 +1,21 @@
 [gd_scene load_steps=9 format=3 uid="uid://xftg6d8oifyr"]
 
-[ext_resource type="Script" uid="uid://bbnelq22r627d" path="res://scripts/classic_bird.gd" id="1_02djn"]
-[ext_resource type="Script" uid="uid://c4wgvfkp17c50" path="res://scripts/game_classic.gd" id="1_js6nj"]
-[ext_resource type="SpriteFrames" uid="uid://ducky85cka" path="res://textures/ducky.tres" id="2_nnwwv"]
-[ext_resource type="Script" uid="uid://rsvscnrwnysi" path="res://scripts/pipe_scroller.gd" id="3_dwblx"]
-[ext_resource type="PackedScene" uid="uid://bpxc0c0mavkla" path="res://scenes/pipe_pair.tscn" id="3_nnwwv"]
-[ext_resource type="Texture2D" uid="uid://bfynpd1bi7yxq" path="res://textures/ground.png" id="5_jctoe"]
-[ext_resource type="Script" uid="uid://ronaq8n2j8ee" path="res://scripts/floor.gd" id="5_s3o20"]
+[ext_resource type="Script" uid="uid://c4wgvfkp17c50" path="res://classic/game_classic.gd" id="1_fgv44"]
+[ext_resource type="Script" uid="uid://ronaq8n2j8ee" path="res://classic/floor.gd" id="2_i4ilp"]
+[ext_resource type="Texture2D" uid="uid://bfynpd1bi7yxq" path="res://textures/ground.png" id="3_ts1s4"]
+[ext_resource type="Script" uid="uid://bbnelq22r627d" path="res://classic/classic_bird.gd" id="4_54bph"]
+[ext_resource type="SpriteFrames" uid="uid://ducky85cka" path="res://textures/ducky.tres" id="5_74plk"]
+[ext_resource type="Script" uid="uid://rsvscnrwnysi" path="res://classic/pipe_scroller.gd" id="6_br8p8"]
+[ext_resource type="PackedScene" uid="uid://bpxc0c0mavkla" path="res://classic/pipe_pair.tscn" id="7_6twle"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnwwv"]
 size = Vector2(805.5, 149.5)
 
 [node name="GameClassic" type="Node2D"]
-script = ExtResource("1_js6nj")
+script = ExtResource("1_fgv44")
 
 [node name="Floor" type="StaticBody2D" parent="."]
-script = ExtResource("5_s3o20")
+script = ExtResource("2_i4ilp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2(348.25, 1313.25)
@@ -24,17 +24,17 @@ shape = SubResource("RectangleShape2D_nnwwv")
 [node name="FloorSprite" type="Sprite2D" parent="Floor"]
 texture_repeat = 2
 position = Vector2(352, 1267)
-texture = ExtResource("5_jctoe")
+texture = ExtResource("3_ts1s4")
 region_enabled = true
 region_rect = Rect2(0, 0, 1024, 64)
 
 [node name="Bird" type="CharacterBody2D" parent="."]
 position = Vector2(120, 0)
-script = ExtResource("1_02djn")
+script = ExtResource("4_54bph")
 
 [node name="BirdSprite" type="AnimatedSprite2D" parent="Bird"]
 scale = Vector2(1.931, 1.931)
-sprite_frames = ExtResource("2_nnwwv")
+sprite_frames = ExtResource("5_74plk")
 animation = &"flap"
 frame = 1
 frame_progress = 0.154324
@@ -47,8 +47,8 @@ polygon = PackedVector2Array(-6.71428, 6.95652, 0.142858, 8.47826, 8.42857, 1.95
 [node name="PipeScroller" type="Node2D" parent="."]
 position = Vector2(112, -10)
 scale = Vector2(7, 4.6)
-script = ExtResource("3_dwblx")
-pipe_scene = ExtResource("3_nnwwv")
+script = ExtResource("6_br8p8")
+pipe_scene = ExtResource("7_6twle")
 
 [node name="UI" type="CanvasLayer" parent="."]
 

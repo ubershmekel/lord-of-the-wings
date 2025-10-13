@@ -11,11 +11,11 @@ var scroll_offset: float = 0.0
 @onready var bird_base_y = screen_size.y - 550
 #@onready var block_height = get_block_height()
 #@onready var half_block_height = block_height / 2
-const BLOCK_HEIGHT = preload("res://scripts/stacky_constants.gd").BLOCK_HEIGHT
+const BLOCK_HEIGHT = preload("res://stacky/stacky_constants.gd").BLOCK_HEIGHT
 const HALF_BLOCK_HEIGHT = BLOCK_HEIGHT / 2
 @onready var camera = $Camera2D
 
-var block_scene = preload("res://scenes/stacky_block.tscn")
+var block_scene = preload("res://stacky/stacky_block.tscn")
 var score := 0
 
 @onready var score_label: Label = $UI/ScoreLabel
