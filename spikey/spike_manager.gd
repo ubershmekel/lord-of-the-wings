@@ -6,25 +6,39 @@ const TILE_SIZE = preload("res://spikey/constants.gd").TILE_SIZE
 const SPIKE_GROUP = preload("res://spikey/constants.gd").SPIKE_GROUP
 
 
-var spawn_timer := 0.0
-var spawn_interval := 2.0
 var spawn_probability := 0.15
+var awaiting_spike_spawn := false
+var bird_reference = null
 
 # Store previously spawned spikes for clearing
 var spawned_spike_instances := []
 
-func _ready():
-	# Initial spawn
-	spawn_timer = spawn_interval
-	spawn_spikes()
-
 func _process(delta):
-	spawn_timer -= delta
-	if spawn_timer <= 0:
-		spawn_timer = spawn_interval
-		# Clear old spikes before spawning new ones
-		clear_spikes()
-		spawn_spikes()
+	if awaiting_spike_spawn and bird_reference:
+		var bird_x = bird_reference.global_position.x
+		var bird_direction = bird_reference.direction
+		
+		var spawn_condition_met = false
+
+		# Bird is a bit wider than tile size, and we don't want spikes
+		# to spawn on it after the wall touch
+		const BUFFER = TILE_SIZE * 3
+		# If bird is moving right (direction = 1), check left wall
+		if bird_direction == 1 and bird_x >= BUFFER:
+			spawn_condition_met = true
+		# If bird is moving left (direction = -1), check right wall
+		elif bird_direction == -1 and bird_x <= (screen_size.x - BUFFER):
+			spawn_condition_met = true
+
+		if spawn_condition_met:
+			clear_spikes()
+			spawn_spikes()
+			awaiting_spike_spawn = false # Reset the flag after spawning
+
+func _on_bird_flipped(direction, position):
+	awaiting_spike_spawn = true
+	# We don't clear spikes here because we want to clear them right before spawning
+	# which happens when the position condition is met.
 
 func clear_spikes():
 	for spike in spawned_spike_instances:

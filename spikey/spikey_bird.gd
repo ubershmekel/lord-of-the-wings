@@ -18,13 +18,14 @@ var direction = 1
 var collisions = 0
 signal scored
 signal died
+signal bird_flipped(direction, position)
 
 func _ready():
 	bird_sprite.play("idle")
 	bird_sprite.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
-	$"../UI/DebugLabel".text = "%.2f" % collisions
+	$"../UI/DebugLabel".text = "%.2f" % position.x
 
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("tap"):
 		velocity.y = JUMP_FORCE
@@ -55,6 +56,7 @@ func _physics_process(delta):
 
 	if flipped:
 		collisions += 1
+		emit_signal("bird_flipped", direction, global_position)
 	velocity.y += GRAVITY * delta
 	velocity.x = FORWARD_SPEED * direction
 	move_and_slide()

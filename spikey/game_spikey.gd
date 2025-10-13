@@ -6,7 +6,10 @@ func _ready():
 	$Bird.connect("scored", scored) # Connect bird's scored signal to game's scored function
 	$Bird.connect("scored", $CandyManager.spawn) # Connect bird's scored signal to candy manager's spawn function
 	$CandyManager.spawn()
+	$SpikeManager.spawn_spikes()
 	update_score()
+	$Bird.connect("bird_flipped", $SpikeManager._on_bird_flipped)
+	$SpikeManager.bird_reference = $Bird
 
 func update_score():
 	$UI/ScoreLabel.text = "Score: %d" % score
