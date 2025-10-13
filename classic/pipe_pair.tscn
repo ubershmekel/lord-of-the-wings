@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bpxc0c0mavkla"]
 
 [ext_resource type="Texture2D" uid="uid://ex6y0di2b55t" path="res://textures/flappy.webp" id="1_8x3ej"]
-[ext_resource type="Script" uid="uid://dmfmbqxwgwvl5" path="res://classic/pipe_pair.gd" id="1_m2bs7"]
+[ext_resource type="Script" path="res://classic/pipe_pair.gd" id="1_m2bs7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_02djn"]
 size = Vector2(23, 294)

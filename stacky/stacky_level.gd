@@ -109,13 +109,9 @@ func generate_chunks():
 		column_chunks.append(floor_chunk)
 		column_heights.append(current_floor_height)
 
-		# Generate ceiling
-		var ceiling_chunk = _create_chunk(column_index, current_ceiling_height)
-		column_chunks.append(ceiling_chunk)
-		column_heights.append(current_ceiling_height)
-
 		# Generate obstacle (middle tile)
-		if randf() < OBSTACLE_PROBABILITY:
+		# Also don't want to generate an obstacle right on the bird when we start so start at 5
+		if blocks_generated_to > 5 and randf() < OBSTACLE_PROBABILITY:
 			# Ensure obstacle doesn't block the path, leave at least 1 empty space below and above
 			var obstacle_min_pos = current_floor_height + 2
 			var obstacle_max_pos = current_ceiling_height - 2
@@ -124,6 +120,11 @@ func generate_chunks():
 				var obstacle_chunk = _create_chunk(column_index, obstacle_height)
 				column_chunks.append(obstacle_chunk)
 				column_heights.append(obstacle_height)
+
+		# Generate ceiling
+		var ceiling_chunk = _create_chunk(column_index, current_ceiling_height)
+		column_chunks.append(ceiling_chunk)
+		column_heights.append(current_ceiling_height)
 
 		index_to_heights[column_index] = column_heights
 		index_to_chunks[column_index] = column_chunks

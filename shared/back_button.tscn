@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://wcj726xhx5mh"]
+
+[ext_resource type="Script" uid="uid://b1w1crp51y3y7" path="res://shared/back_button.gd" id="1_sndf3"]
+
+[node name="BackButton" type="Node2D"]
+script = ExtResource("1_sndf3")
+
+[node name="BackButton" type="Button" parent="."]
+offset_right = 147.0
+offset_bottom = 65.0
+text = "back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
