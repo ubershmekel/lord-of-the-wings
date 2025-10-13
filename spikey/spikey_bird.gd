@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const GRAVITY = 1400
-const JUMP_FORCE = -500
+const JUMP_FORCE = -600
 const MIN_ROTATION = deg_to_rad(-30)  # max upward
 const MAX_ROTATION = deg_to_rad(60)   # max downward
 const ROTATION_SPEED = 16             # higher = snappier
@@ -34,12 +34,17 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		if collider.name == "Right":
+			bird_sprite.flip_h = true
 			flipped = true
 			direction = -1
 		if  collider.name == "Left":
+			bird_sprite.flip_h = false
 			flipped = true
 			direction = 1
-			
+		
+		if collider.name == "Spike":
+			die()
+		
 		if collider.name == "ScoreZone":
 			score()
 			collider.queue_free()
@@ -62,6 +67,7 @@ func score():
 	emit_signal("scored")
 
 func die():
+	print("died")
 	emit_signal("died")
 
 func _on_animation_finished():
